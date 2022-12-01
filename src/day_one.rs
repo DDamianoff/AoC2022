@@ -3,7 +3,7 @@ use std::fs;
 const DAY: &str = "one";
 
 fn main() {
-    let input = fs::read_to_string(format!("./src/inputs/day_{DAY}.txt"))
+    let input = fs::read_to_string(format!("./inputs/day_{DAY}.txt"))
         .expect("Not hable to read that file tho");
 
     let separated_input = input.split("\n\n");
