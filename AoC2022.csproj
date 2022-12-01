@@ -9,7 +9,6 @@
   
   <ItemGroup>
     <Content Include="./inputs/*">
-      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

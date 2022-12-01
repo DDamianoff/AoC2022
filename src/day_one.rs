@@ -1,7 +1,5 @@
 use std::fs;
-
 const DAY: &str = "one";
-
 fn main() {
     let input = fs::read_to_string(format!("./inputs/day_{DAY}.txt"))
         .expect("Not hable to read that file tho");
@@ -26,14 +24,11 @@ fn main() {
     elves.reverse();
 
     println!("Top Tier Elf: {:?}", &elves[0]);
-
     println!("Top Tier Elves: {:?}", &elves[0..3]);
 
     let mut final_result = 0;
-
     for cal in &elves[0..3] {
         final_result += cal;
     }
-
     println!("Total calories of Top Tier Elves: {final_result}");
 }
