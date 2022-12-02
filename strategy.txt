@@ -1,0 +1,22 @@
+WIN:
+A Y
+B Z 
+C X 
+      + 6
+
+EMP:
+A X
+B Y
+C Z
+      + 3
+
+LOS:
+A Z
+B X
+C Y
+      + 0
+
+
+pie	= A X 1 
+pap	= B Y 2
+tij	= C Z 3
