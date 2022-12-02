@@ -1,4 +1,6 @@
-
+#![allow(non_snake_case)]
+mod days;
+use crate::days::days::day_one;
 fn main() {
-    // solutions in: "day_N.rs"
+    day_one();
 }

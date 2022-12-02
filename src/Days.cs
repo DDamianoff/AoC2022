@@ -12,16 +12,21 @@ public static class Days
                 e.Split("\n")
                     .Select(int.Parse)
                     .Sum())
+            .Order()
+            .TakeLast(3)
             .ToList();
 
         parsedElves
-            .Max()
+            .Last()
             .Display("Elf with most calories");
 
         parsedElves
-            .Order()
-            .TakeLast(3)
             .Sum()
             .Display("Sum of top three elves with most calories");
+    }
+
+    public static void DayTwo()
+    {
+        
     }
 }
