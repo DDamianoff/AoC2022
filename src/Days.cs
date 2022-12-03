@@ -4,7 +4,7 @@ public static class Days
 {
     public static void DayOne()
     {
-        var rawValueList = File.ReadAllText("./inputs/day_one.txt");
+        var rawValueList = File.ReadAllText("./inputs/D01.txt");
 
         var parsedElves = rawValueList
             .Split("\n\n")
@@ -28,7 +28,7 @@ public static class Days
     public static void DayTwo()
     {
         var valueList = File
-            .ReadAllText("./inputs/day_two.txt")
+            .ReadAllText("./inputs/D02.txt")
             .Split("\n")
             .Select(e => 
                 e.Replace(" ", ""))
@@ -62,4 +62,36 @@ public static class Days
             .Display("Total (second)");
     }
 
+    public static void DayThree()
+    {
+        var input = File.ReadAllLines("./inputs/D03.txt")
+            .Select(backpack =>
+            {
+                var half = (backpack.Length / 2);
+                return new[]
+                {
+                    backpack[0..half], backpack[half..]
+                };
+            });
+
+        input
+            .Select(bp =>
+                bp[0].Distinct()
+                    .First(c =>
+                        bp[1].Distinct()
+                            .Contains(c)))
+            .Select(match =>
+            {
+                var asChar = Convert.ToByte(match);
+                return new
+                {
+                    match,
+                    priority = asChar < 91
+                        ? asChar - 65 + 27
+                        : asChar - 96
+                };})
+            .ToList()            
+            .ForEach(kp => Console.WriteLine($"{kp.match}: {kp.priority}"));
+        
+    }
 }
