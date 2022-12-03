@@ -12,6 +12,19 @@ internal static class Utils
     }
 }
 
+/// <summary>
+/// The idea is:
+/// Since the two parts of the problem makes
+/// 'X,Y,Z' differ in meaning ("rock, paper, scissors" vs "win, draw, lose")
+/// This solution parses those values to 'rock, paper, scissors' (P,Q,R).
+/// For the problem one: just using a dictionary (X => P).
+/// For the problem two: determining werther we want to lose, win or draw (dictionaries)
+/// Each of those receives the enemy's move as a key and return your move.
+///
+/// Both cases returns a string like "AQ", witch would be used
+/// for another function to compute the round's value.
+/// 
+/// </summary>
 internal static class DayTwoUtils
 {
     
@@ -20,7 +33,7 @@ internal static class DayTwoUtils
         'P' => 1,
         'Q' => 2,
         'R' => 3,
-        _ => throw new Exception("Shouldn't happen but makes the Roslyn happy")
+        _ => throw new Exception("Shouldn't happen but makes Roslyn happy")
     };
     
     internal static int GetPoints(this string match) =>
@@ -29,7 +42,7 @@ internal static class DayTwoUtils
             "AQ" or "BR" or "CP" => 6,
             "AP" or "BQ" or "CR" => 3,
             "AR" or "BP" or "CQ" => 0,
-            _ => throw new Exception("Shouldn't happen but makes the Roslyn happy")
+            _ => throw new ArgumentOutOfRangeException(nameof(match), match, null)
         };
 
     internal static char OperateStrategy(this char movement) => 
@@ -38,7 +51,7 @@ internal static class DayTwoUtils
             'X' => 'P',
             'Y' => 'Q',
             'Z' => 'R',
-            _ => throw new Exception()
+            _ => throw new ArgumentOutOfRangeException(nameof(movement), movement, null)
         };
 
     internal static char OperateStrategy(this char movement, char enemyMovement)
