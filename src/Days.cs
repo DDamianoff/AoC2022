@@ -82,16 +82,16 @@ public static class Days
                             .Contains(c)))
             .Select(match =>
             {
-                var asChar = Convert.ToByte(match);
+                var asciiValue = Convert.ToByte(match);
                 return new
                 {
                     match,
-                    priority = asChar < 91
-                        ? asChar - 65 + 27
-                        : asChar - 96
+                    priority = asciiValue < 91 // ASCII Table for reference.
+                        ? asciiValue - 65 + 27
+                        : asciiValue - 96
                 };})
-            .ToList()            
-            .ForEach(kp => Console.WriteLine($"{kp.match}: {kp.priority}"));
+            .Sum(kv => kv.priority)
+            .Display("total");
         
     }
 }
