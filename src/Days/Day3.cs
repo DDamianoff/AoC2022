@@ -1,70 +1,7 @@
-using System.Collections;
-using System.Runtime.InteropServices.ComTypes;
+namespace Advent22;
 
-namespace AoC2022;
-
-public static class Days
+public static class Day3
 {
-    public static void DayOne()
-    {
-        var rawValueList = File.ReadAllText("./inputs/D01.txt");
-
-        var parsedElves = rawValueList
-            .Split("\n\n")
-            .Select(e => 
-                e.Split("\n")
-                    .Select(int.Parse)
-                    .Sum())
-            .Order()
-            .TakeLast(3)
-            .ToList();
-
-        parsedElves
-            .Last()
-            .Display("Elf with most calories");
-
-        parsedElves
-            .Sum()
-            .Display("Sum of top three elves with most calories");
-    }
-
-    public static void DayTwo()
-    {
-        var valueList = File
-            .ReadAllText("./inputs/D02.txt")
-            .Split("\n")
-            .Select(e => 
-                e.Replace(" ", ""))
-            .Select(e => new
-            {
-                EnemyMovement = e[0],
-                Strategy = e[1]
-            })
-            .ToList();
-        
-        valueList
-            .Select(v =>
-                string.Concat(
-                    v.EnemyMovement,
-                    v.Strategy.OperateStrategy()))
-            .Select(s => 
-                s.GetPoints() + 
-                s.GetBonus())
-            .Sum()
-            .Display("Total (first)");
-
-        valueList
-            .Select(v =>
-                string.Concat(
-                    v.EnemyMovement,
-                    v.Strategy.OperateStrategy(v.EnemyMovement)))
-            .Select(s => 
-                s.GetPoints() + 
-                s.GetBonus())
-            .Sum()
-            .Display("Total (second)");
-    }
-
     public static void DayThreePartOne()
     {
         var input = File.ReadAllLines("./inputs/D03.txt")

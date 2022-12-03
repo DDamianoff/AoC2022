@@ -1,3 +1,3 @@
-﻿using AoC2022;
+﻿using Advent22;
 
-Days.DayTwo();
+Day3.DayThreePartOne();

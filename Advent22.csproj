@@ -8,6 +8,7 @@
     <PublishAot>true</PublishAot>
     <StripSymbols>true</StripSymbols>
     <Nullable>disable</Nullable>
+    <RootNamespace>Advent22</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
