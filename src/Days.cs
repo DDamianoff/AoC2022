@@ -110,21 +110,19 @@ public static class Days
         {
             var elfGroup = new string[groupSize];
 
-            for (int i = 0; i < groupSize; i++)
-            {
+            for (int i = 0; i < groupSize; i++) 
                 elfGroup[i] = input.Pop();
-            }
-
-            var sticker = elfGroup.GetSticker();
-
-            var stickers = string.Join("", elfGroup).Count(c => c == sticker);
-
-            var priority = sticker.PriorityValue() * stickers;
+            
+            var priority = elfGroup
+                .GetSticker()
+                .PriorityValue();
             
             grouped.Add(priority);
         }
 
-        grouped.ForEach(Console.WriteLine);
+        grouped
+            .Sum()
+            .Display("Result (part two)");
     }
 
     internal static char GetSticker(this string[] list)
@@ -132,18 +130,14 @@ public static class Days
         var matcher = new Dictionary<char, int>();
         var processedList = "";
 
-        foreach (var backpack in list)
-        {
-            processedList += String.Join("",backpack.Distinct());
-        }
-        
+        foreach (var backpack in list) 
+            processedList += String.Join("", backpack.Distinct());
+
         foreach (char c in processedList)
-        {
             if (matcher.ContainsKey(c))
                 matcher[c]++;
-            else 
+            else
                 matcher[c] = 0;
-        }
         return matcher.First(c => c.Value == 2).Key;
     }
     
