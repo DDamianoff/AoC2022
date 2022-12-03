@@ -54,7 +54,7 @@ public static class Day2
             .Display("Total (second)");
     }
     
-    internal static int GetBonus(this string match) => match[1] switch
+    private static int GetBonus(this string match) => match[1] switch
     {
         'P' => 1,
         'Q' => 2,
@@ -62,7 +62,7 @@ public static class Day2
         _ => throw new Exception("Shouldn't happen but makes Roslyn happy")
     };
     
-    internal static int GetPoints(this string match) =>
+    private static int GetPoints(this string match) =>
         match switch
         {
             "AQ" or "BR" or "CP" => 6,
@@ -71,7 +71,7 @@ public static class Day2
             _ => throw new ArgumentOutOfRangeException(nameof(match), match, null)
         };
 
-    internal static char OperateStrategy(this char movement) => 
+    private static char OperateStrategy(this char movement) => 
         movement switch
         {
             'X' => 'P',
@@ -80,7 +80,7 @@ public static class Day2
             _ => throw new ArgumentOutOfRangeException(nameof(movement), movement, null)
         };
 
-    internal static char OperateStrategy(this char movement, char enemyMovement)
+    private static char OperateStrategy(this char movement, char enemyMovement)
     {
         // TODO: rotating values
         // var values =  new [] { 'A', 'B', 'C' };

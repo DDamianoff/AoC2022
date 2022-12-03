@@ -62,13 +62,12 @@ public static class Day3
             .Display("Result (part two)");
     }
 
-    internal static char GetSticker(this string[] list)
+    private static char GetSticker(this string[] list)
     {
         var matcher = new Dictionary<char, int>();
-        var processedList = "";
-
-        foreach (var backpack in list) 
-            processedList += String.Join("", backpack.Distinct());
+        
+        var processedList = list.Aggregate("", (current, next) 
+            => current + string.Join("", next.Distinct()));
 
         foreach (char c in processedList)
             if (matcher.ContainsKey(c))
@@ -77,8 +76,8 @@ public static class Day3
                 matcher[c] = 0;
         return matcher.First(c => c.Value == 2).Key;
     }
-    
-    internal static int PriorityValue (this char c)
+
+    private static int PriorityValue (this char c)
     {
         var asciiValue = Convert.ToByte(c);
         return asciiValue < 91 // ASCII Table for reference.
