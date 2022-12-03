@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Runtime.InteropServices.ComTypes;
+
 namespace AoC2022;
 
 public static class Days
@@ -62,7 +65,7 @@ public static class Days
             .Display("Total (second)");
     }
 
-    public static void DayThree()
+    public static void DayThreePartOne()
     {
         var input = File.ReadAllLines("./inputs/D03.txt")
             .Select(backpack =>
@@ -93,5 +96,62 @@ public static class Days
             .Sum(kv => kv.priority)
             .Display("total");
         
+    }
+
+    public static void DayThreePartTwo()
+    {
+        // I'll take an imperative approach with this part
+        var input = new Stack<string>(File.ReadAllLines("./inputs/D03.txt"));
+        
+        var grouped = new List<int>();
+
+        const int groupSize = 3;
+        while (input.Count != 0)
+        {
+            var elfGroup = new string[groupSize];
+
+            for (int i = 0; i < groupSize; i++)
+            {
+                elfGroup[i] = input.Pop();
+            }
+
+            var sticker = elfGroup.GetSticker();
+
+            var stickers = string.Join("", elfGroup).Count(c => c == sticker);
+
+            var priority = sticker.PriorityValue() * stickers;
+            
+            grouped.Add(priority);
+        }
+
+        grouped.ForEach(Console.WriteLine);
+    }
+
+    internal static char GetSticker(this string[] list)
+    {
+        var matcher = new Dictionary<char, int>();
+        var processedList = "";
+
+        foreach (var backpack in list)
+        {
+            processedList += String.Join("",backpack.Distinct());
+        }
+        
+        foreach (char c in processedList)
+        {
+            if (matcher.ContainsKey(c))
+                matcher[c]++;
+            else 
+                matcher[c] = 0;
+        }
+        return matcher.First(c => c.Value == 2).Key;
+    }
+    
+    internal static int PriorityValue (this char c)
+    {
+        var asciiValue = Convert.ToByte(c);
+        return asciiValue < 91 // ASCII Table for reference.
+            ? asciiValue - 65 + 27
+            : asciiValue - 96;
     }
 }
