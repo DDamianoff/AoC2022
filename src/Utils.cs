@@ -10,5 +10,15 @@ internal static class Utils
         for (int i = 0; i < times; i++) 
             acton.Invoke();
     }
+    
+    
+    public static bool InRange(this int @int, int maxRangeValue)
+        => @int.InRange(0, maxRangeValue);
+    
+    public static bool InRange(this int @int, int minRangeValue, int maxRangeValue)
+        => minRangeValue <= @int && @int <= maxRangeValue;
+    
+    public static bool InRange(this int @int, (int min, int max) range)
+        => range.min <= @int && @int <= range.max;
 }
 
