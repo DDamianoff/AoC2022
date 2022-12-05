@@ -3,9 +3,7 @@ namespace Advent22;
 public static class Day4
 {
     public static void DayFour()
-    { 
-        Console.Clear();
-        
+    {
         var input = File.ReadAllLines("./inputs/D04.txt");
         var elfPair = input
                 .Select(e => e.Split(","))
