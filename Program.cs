@@ -1,3 +1,4 @@
 ﻿using Advent22;
 
-Day3.DayThreePartOne();
+Day5.DayFivePartOne();
+Day5.DayFivePartTwo();
