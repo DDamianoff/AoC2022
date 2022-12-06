@@ -17,13 +17,8 @@ public static class Day5
             .ToArray();
         
         wareHouse.ApplyInstruction(orderList);
-            
-        var output = string.Empty;
-
-        foreach (var key in wareHouse.Storage.Keys)
-            output += wareHouse.Storage[key].Peek();
         
-        output.Display("Part one");
+        wareHouse.Display("Part one");
     }
     
     public static void DayFivePartTwo()
@@ -38,12 +33,7 @@ public static class Day5
         
         wareHouse.ApplyInstructionV2(orderList);
         
-        var output = string.Empty;
-
-        foreach (var key in wareHouse.Storage.Keys)
-            output += wareHouse.Storage[key].Peek();
-        
-        output.Display("Part two");
+        wareHouse.Display("Part two");
     }
 
     static Day5()
@@ -115,6 +105,12 @@ internal class WareHouse
             
             destin.Push(crate);
         });
+    }
+
+    public override string ToString()
+    {
+        return Storage.Keys.Aggregate(string.Empty, (current, key) 
+            => current + Storage[key].Peek());
     }
 }
 
