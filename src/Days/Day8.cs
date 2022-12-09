@@ -6,16 +6,12 @@ public static class Day8
 {
     public static void DayEight()
     {
-        var input = File.ReadAllLines("./inputs/D0X.txt");
-            // .Select(s => s
-            //     .ToCharArray()
-            //     .Select(c => 
-            //         (int)char.GetNumericValue(c))
-            //     .ToArray()
-            // )
-            // .ToArray();
-            
-        var grid = new Grid(input);
+        var input = File.ReadAllLines("./inputs/D08.txt");
 
+        var grid = new SquareGrid(input);
+
+        var trees = grid.ImTiredNeedContinueWithMyLife().Count;
+        
+        trees.Display("total hidden trees");
     }
 }

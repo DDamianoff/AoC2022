@@ -1,9 +1,9 @@
 namespace Advent22.Day08.Utils;
 
-internal partial class Grid
+internal partial class SquareGrid
 {
     
-    internal Grid(string[] values)
+    internal SquareGrid(string[] values)
     {
         _size = values.Length;
         
@@ -27,6 +27,4 @@ internal partial class Grid
     
     private int[,] _grid;
     private readonly int _size;
-    
-    
 }
