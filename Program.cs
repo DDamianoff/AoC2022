@@ -1,3 +1,3 @@
 ﻿using Advent22;
 
-Day7.DaySeven();
+Day8.DayEight();
