@@ -10,7 +10,7 @@ internal partial class SquareGrid
         if (values[0].Length != values.Length)
             throw new ArgumentException("Invalid grid");
 
-        _gridV2 = new Dictionary<(int x, int y), int>();
+        _gridV2 = new Dictionary<(int row, int col), int>();
 
         for (var i = 0; i < values.Length; i++)
         {
@@ -24,6 +24,6 @@ internal partial class SquareGrid
                 _gridV2[(i, j)] = parsedString[j];
         }
     }
-    private readonly Dictionary<(int x, int y), int> _gridV2;
+    private readonly Dictionary<(int row, int col), int> _gridV2;
     private readonly int _size;
 }

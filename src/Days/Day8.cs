@@ -10,9 +10,14 @@ public static class Day8
 
         var grid = new SquareGrid(input);
 
-        var trees = grid.SearchVisibleTrees().Count;
-        
-        trees.Display("total hidden trees");
+       grid
+           .SearchVisibleTrees()
+           .Count
+           .Display("total visible trees");
+
+        grid
+            .GetTopScenicValue()
+            .Display("top");
     }
 }
 

@@ -6,7 +6,7 @@ internal static class Extractor
     * standard *
     ***********/
     public static Dictionary<(int x, int y), int> ExtractColumn(
-        this Dictionary<(int x, int y), int> grid,
+        this Dictionary<(int row, int col), int> grid,
         int size,
         int columnNumber) 
         => Enumerable
@@ -19,7 +19,7 @@ internal static class Extractor
                 kvp => kvp.Value);
     
     public static Dictionary<(int x, int y), int> ExtractRow(
-        this Dictionary<(int x, int y), int> grid,
+        this Dictionary<(int row, int col), int> grid,
         int size,
         int rowNumber)
     {
@@ -39,7 +39,7 @@ internal static class Extractor
     * reverse *
     **********/ 
     public static Dictionary<(int x, int y), int> ExtractReversedColumn(
-        this Dictionary<(int x, int y), int> grid,
+        this Dictionary<(int row, int col), int> grid,
         int size,
         int columnNumber) =>
         Enumerable
@@ -52,7 +52,7 @@ internal static class Extractor
                 kvp => kvp.Value);
 
     public static  Dictionary<(int x, int y), int> ExtractReversedRow(
-        this Dictionary<(int x, int y), int> grid,
+        this Dictionary<(int row, int col), int> grid,
         int size,
         int rowNumber)
     {
