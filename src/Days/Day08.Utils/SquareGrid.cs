@@ -26,17 +26,4 @@ internal partial class SquareGrid
     }
     private readonly Dictionary<(int x, int y), int> _gridV2;
     private readonly int _size;
-    
-
-    public int[] ExtractColumn(int columnNumber) =>
-        Enumerable
-            .Range(0, _size)
-            .Select(x => _gridV2[(x, columnNumber)])
-            .ToArray();
-
-    public int[] ExtractRow(int rowNumber) =>
-        Enumerable
-            .Range(0, _size)
-            .Select(y => _gridV2[(rowNumber, y)])
-            .ToArray();
 }
