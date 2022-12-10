@@ -27,4 +27,17 @@ internal partial class SquareGrid
     
     private int[,] _grid;
     private readonly int _size;
+    
+    // thanks to this guy: https://stackoverflow.com/a/51241629
+    public int[] ExtractColumn(int columnNumber) =>         // TODO: overload starting point to Pt2
+        Enumerable
+            .Range(0, _grid.GetLength(0))
+            .Select(x => _grid[x, columnNumber])
+            .ToArray();
+
+    public int[] ExtractRow(int rowNumber) =>               // TODO: overload starting point to Pt2
+        Enumerable
+            .Range(0, _grid.GetLength(1))
+            .Select(x => _grid[rowNumber, x])
+            .ToArray();
 }
