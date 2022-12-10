@@ -10,7 +10,7 @@ internal partial class SquareGrid
         if (values[0].Length != values.Length)
             throw new ArgumentException("Invalid grid");
 
-        _grid = new int[_size,_size];
+        _gridV2 = new Dictionary<(int x, int y), int>();
 
         for (var i = 0; i < values.Length; i++)
         {
@@ -21,23 +21,22 @@ internal partial class SquareGrid
                 .ToArray();
 
             for (var j = 0; j < parsedString.Length; j++) 
-                _grid[i, j] = parsedString[j];
+                _gridV2[(i, j)] = parsedString[j];
         }
     }
-    
-    private int[,] _grid;
+    private readonly Dictionary<(int x, int y), int> _gridV2;
     private readonly int _size;
     
-    // thanks to this guy: https://stackoverflow.com/a/51241629
-    public int[] ExtractColumn(int columnNumber) =>         // TODO: overload starting point to Pt2
+
+    public int[] ExtractColumn(int columnNumber) =>
         Enumerable
-            .Range(0, _grid.GetLength(0))
-            .Select(x => _grid[x, columnNumber])
+            .Range(0, _size)
+            .Select(x => _gridV2[(x, columnNumber)])
             .ToArray();
 
-    public int[] ExtractRow(int rowNumber) =>               // TODO: overload starting point to Pt2
+    public int[] ExtractRow(int rowNumber) =>
         Enumerable
-            .Range(0, _grid.GetLength(1))
-            .Select(x => _grid[rowNumber, x])
+            .Range(0, _size)
+            .Select(y => _gridV2[(rowNumber, y)])
             .ToArray();
 }
