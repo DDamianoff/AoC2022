@@ -34,7 +34,7 @@ public static class DirectionInterpreter
     public static IEnumerable<Movement> GetMultipleFromStringCommand(string[] commands) 
         => commands.Select(GetSingleFromStringCommand);
     
-    public static (int x, int y) Operate (this (int x, int y) a, (int x, int y) b)
+    public static (int x, int y) Apply (this (int x, int y) a, (int x, int y) b)
         => ( a.x + b.x , a.y + b.y);
     
     public static (int x, int y) Negate (this (int x, int y) coordinate)

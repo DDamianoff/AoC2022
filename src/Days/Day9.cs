@@ -6,7 +6,7 @@ public static class Day9
 {
     public static void DayNine()
     {
-        var input = File.ReadAllLines("./inputs/D0X.txt");
+        var input = File.ReadAllLines("./inputs/D09.txt");
         var sequenceList = DirectionInterpreter.GetMultipleFromStringCommand(input);
         
         var tailUsedPositions = new HashSet<(int x, int y)>();
@@ -18,9 +18,9 @@ public static class Day9
         
         foreach (var direction in sequenceList)
         {
-            foreach (var _ in Enumerable.Range(1, direction.Count))
+            for (var _ = 0; _ < direction.Count; _++)
             {
-                var headTargetCoordinates = head.Operate(direction.RelativeCoords);
+                var headTargetCoordinates = head.Apply(direction.RelativeCoords);
                 
                 head.MoveTo(headTargetCoordinates);
 
@@ -56,7 +56,7 @@ public static class Day9
     private static (int x, int y) GetTailTargetCoordinates(CardinalPoint direction, (int x, int y) headCoords)
     {
         var relativeDirectionCoordinates = DirectionInterpreter.GetSingle(direction.Opposite());
-        return headCoords.Operate(relativeDirectionCoordinates.RelativeCoords);
+        return headCoords.Apply(relativeDirectionCoordinates.RelativeCoords);
     }
 }
 
