@@ -19,14 +19,14 @@ public static class DirectionInterpreter
         };
     }
     
-    public static Movement GetSingle(CardinalPoint direction, int count)
+    public static Movement GetSingle(CardinalPoint direction)
     {
         return direction switch
         {
-            CardinalPoint.East => Movement.Right(count),
-            CardinalPoint.West => Movement.Left(count),
-            CardinalPoint.North => Movement.Up(count),
-            CardinalPoint.South => Movement.Down(count),
+            CardinalPoint.East => Movement.Right(1),
+            CardinalPoint.West => Movement.Left(1),
+            CardinalPoint.North => Movement.Up(1),
+            CardinalPoint.South => Movement.Down(1),
             _ => throw new InvalidOperationException()
         };
     }
@@ -54,7 +54,9 @@ public static class DirectionInterpreter
             [CardinalPoint.Northwest] = (target.x-1, target.y+1),
             
             [CardinalPoint.Southeast] = (target.x+1, target.y-1),
-            [CardinalPoint.Southwest] = (target.x+1, target.y-1),
+            [CardinalPoint.Southwest] = (target.x-1, target.y-1),
+            
+            [CardinalPoint.Center] = (target.x, target.y)
         };
     }
 }

@@ -11,6 +11,8 @@ public enum CardinalPoint
     Southeast,
     Northwest,
     Southwest,
+    
+    Center,
 }
 
 public static class CardinalPointHelper
