@@ -7,7 +7,7 @@ public static class DirectionInterpreter
     {
         
         var directionChar = command[0];
-        var count = (int)char.GetNumericValue(command[2]);
+        var count = int.Parse(command[2..]);
 
         return directionChar switch
         {
