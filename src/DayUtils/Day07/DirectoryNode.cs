@@ -1,5 +1,5 @@
 #nullable enable
-namespace Advent22.Day07.Utils;
+namespace Advent22.DayUtils.Day07;
 internal class DirectoryNode : INode
 {
     public DirectoryNode(DirectoryNode? parent, string name)

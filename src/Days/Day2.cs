@@ -1,5 +1,3 @@
-using Advent22;
-
 namespace Advent22;
 
 /// <summary>

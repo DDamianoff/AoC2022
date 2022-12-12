@@ -1,4 +1,4 @@
-namespace Advent22.Day09.Utils;
+namespace Advent22.DayUtils.Day09;
 
 public readonly struct Movement
 {

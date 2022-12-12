@@ -1,4 +1,4 @@
-namespace Advent22.Day09.Utils;
+namespace Advent22.DayUtils.Day09;
 
 // R 2 => (x:2,y:0)
 public static class DirectionInterpreter

@@ -1,4 +1,4 @@
-using Advent22.Day08.Utils;
+using Advent22.DayUtils.Day08;
 
 namespace Advent22;
 

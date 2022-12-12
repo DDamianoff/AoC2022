@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using System.Diagnostics;
+
 namespace Advent22;
 
 public static class Day5

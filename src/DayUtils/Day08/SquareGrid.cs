@@ -1,4 +1,4 @@
-namespace Advent22.Day08.Utils;
+namespace Advent22.DayUtils.Day08;
 
 internal partial class SquareGrid
 {

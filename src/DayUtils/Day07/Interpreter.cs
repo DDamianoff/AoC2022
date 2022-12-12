@@ -1,7 +1,7 @@
 #nullable enable
 using System.Text.RegularExpressions;
 
-namespace Advent22.Day07.Utils;
+namespace Advent22.DayUtils.Day07;
 internal sealed class Interpreter
 {
     private readonly Stack<string> _applier;

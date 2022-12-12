@@ -1,5 +1,6 @@
-using Advent22.Day07.Utils;
 #nullable enable
+using Advent22.DayUtils.Day07;
+
 namespace Advent22;
 
 public static class Day7
