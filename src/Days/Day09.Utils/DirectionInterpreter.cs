@@ -59,4 +59,16 @@ public static class DirectionInterpreter
             [CardinalPoint.Center] = (target.x, target.y)
         };
     }
+    
+    public static Dictionary<CardinalPoint, (int x, int y)> GetCrossAdjacentCoords(this (int x, int y) target)
+    {
+        return new Dictionary<CardinalPoint, (int x, int y)>
+        {
+            [CardinalPoint.East]      = (target.x+1, target.y+0),
+            [CardinalPoint.West]      = (target.x-1, target.y+0),
+            
+            [CardinalPoint.North]     = (target.x+0, target.y+1),
+            [CardinalPoint.South]     = (target.x+0, target.y-1)
+        };
+    }
 }
