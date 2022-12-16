@@ -1,5 +1,5 @@
 namespace Advent22.Utils.Cardinals;
-
+// TODO: pending refactor: transform this into "Direction" struct.
 public enum CardinalDir
 {
     South,
