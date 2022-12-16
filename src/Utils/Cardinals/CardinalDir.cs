@@ -1,5 +1,6 @@
 namespace Advent22.Utils.Cardinals;
 // TODO: pending refactor: transform this into "Direction" struct.
+[Obsolete("use Utils.Cardinals.Direction")]
 public enum CardinalDir
 {
     South,
@@ -8,6 +9,7 @@ public enum CardinalDir
     East
 }
 
+[Obsolete("use Utils.Cardinals.Direction")]
 public enum XCardinalDir
 {
     South,
@@ -23,7 +25,7 @@ public enum XCardinalDir
     Center,
 }
 
-
+[Obsolete("use Utils.Cardinals.Direction")]
 public static class CardinalPointHelper
 {
     public static XCardinalDir Opposite(this XCardinalDir direction)

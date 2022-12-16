@@ -5,6 +5,7 @@ using Advent22.Utils.Cardinals;
 namespace Advent22.DayUtils.DaY09;
 
 // R 2 => (X:2,Y:0)
+[Obsolete("use new a shiny Cardinal.Direction instead")]
 public static class DirectionInterpreter
 {
     public static Movement GetSingleFromStringCommand(string command)
