@@ -1,3 +1,5 @@
+using Advent22.Utils;
+
 namespace Advent22.DayUtils.Day09;
 
 public readonly struct Movement
@@ -18,10 +20,10 @@ public readonly struct Movement
     public int Count
     { get; }
 
-    public static Movement Up(int count) => new Movement(CardinalPoint.North,   (0, +1), count);
-    public static Movement Down(int count) => new Movement(CardinalPoint.South, (0, -1), count);
-    public static Movement Right(int count) => new Movement(CardinalPoint.East, (+1, 0), count);
-    public static Movement Left(int count) => new Movement(CardinalPoint.West,  (-1, 0), count);
+    public static Movement Up(int count = 1) => new(CardinalPoint.North,   (0, +1), count);
+    public static Movement Down(int count = 1) => new(CardinalPoint.South, (0, -1), count);
+    public static Movement Right(int count = 1) => new(CardinalPoint.East, (+1, 0), count);
+    public static Movement Left(int count = 1) => new(CardinalPoint.West,  (-1, 0), count);
 
     public override string ToString()
     {

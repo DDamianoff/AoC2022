@@ -1,6 +1,10 @@
-namespace Advent22.DayUtils.Day09;
+using Advent22.DayUtils.Day09;
+using Advent22.Utils;
+using Advent22.Utils.Cardinals;
 
-// R 2 => (x:2,y:0)
+namespace Advent22.DaYUtils.DaY09;
+
+// R 2 => (X:2,Y:0)
 public static class DirectionInterpreter
 {
     public static Movement GetSingleFromStringCommand(string command)
@@ -19,14 +23,14 @@ public static class DirectionInterpreter
         };
     }
     
-    public static Movement GetSingle(CardinalPoint direction)
+    public static Movement GetSingle(CardinalDir direction)
     {
         return direction switch
         {
-            CardinalPoint.East => Movement.Right(1),
-            CardinalPoint.West => Movement.Left(1),
-            CardinalPoint.North => Movement.Up(1),
-            CardinalPoint.South => Movement.Down(1),
+            CardinalDir.East => Movement.Right(1),
+            CardinalDir.West => Movement.Left(1),
+            CardinalDir.North => Movement.Up(1),
+            CardinalDir.South => Movement.Down(1),
             _ => throw new InvalidOperationException()
         };
     }
@@ -34,41 +38,41 @@ public static class DirectionInterpreter
     public static IEnumerable<Movement> GetMultipleFromStringCommand(string[] commands) 
         => commands.Select(GetSingleFromStringCommand);
     
-    public static (int x, int y) Apply (this (int x, int y) a, (int x, int y) b)
-        => ( a.x + b.x , a.y + b.y);
+    public static Coordinate Apply (this Coordinate a, Coordinate b)
+        => ( a.X + b.X , a.Y + b.Y);
     
-    public static (int x, int y) Negate (this (int x, int y) coordinate)
-        => (-coordinate.x, -coordinate.y);
+    public static Coordinate Negate (this Coordinate coordinate)
+        => (-coordinate.X, -coordinate.Y);
 
-    public static Dictionary<CardinalPoint, (int x, int y)> GetAdjacentCoords(this (int x, int y) target)
+    public static Dictionary<XCardinalDir, Coordinate> GetAdjacentCoords(this Coordinate target)
     {
-        return new Dictionary<CardinalPoint, (int x, int y)>()
+        return new Dictionary<XCardinalDir, Coordinate>()
         {
-            [CardinalPoint.East]      = (target.x+1, target.y+0),
-            [CardinalPoint.West]      = (target.x-1, target.y+0),
+            [XCardinalDir.East]      = (target.X+1, target.Y+0),
+            [XCardinalDir.West]      = (target.X-1, target.Y+0),
             
-            [CardinalPoint.North]     = (target.x+0, target.y+1),
-            [CardinalPoint.South]     = (target.x+0, target.y-1),
+            [XCardinalDir.North]     = (target.X+0, target.Y+1),
+            [XCardinalDir.South]     = (target.X+0, target.Y-1),
             
-            [CardinalPoint.Northeast] = (target.x+1, target.y+1),
-            [CardinalPoint.Northwest] = (target.x-1, target.y+1),
+            [XCardinalDir.Northeast] = (target.X+1, target.Y+1),
+            [XCardinalDir.Northwest] = (target.X-1, target.Y+1),
             
-            [CardinalPoint.Southeast] = (target.x+1, target.y-1),
-            [CardinalPoint.Southwest] = (target.x-1, target.y-1),
+            [XCardinalDir.Southeast] = (target.X+1, target.Y-1),
+            [XCardinalDir.Southwest] = (target.X-1, target.Y-1),
             
-            [CardinalPoint.Center] = (target.x, target.y)
+            [XCardinalDir.Center] = (target.X, target.Y)
         };
     }
     
-    public static Dictionary<CardinalPoint, (int x, int y)> GetCrossAdjacentCoords(this (int x, int y) target)
+    public static Dictionary<CardinalDir, Coordinate> GetCrossAdjacentCoords(this Coordinate target)
     {
-        return new Dictionary<CardinalPoint, (int x, int y)>
+        return new Dictionary<CardinalDir, Coordinate>
         {
-            [CardinalPoint.East]      = (target.x+1, target.y+0),
-            [CardinalPoint.West]      = (target.x-1, target.y+0),
+            [CardinalDir.East]      = (target.X+1, target.Y+0),
+            [CardinalDir.West]      = (target.X-1, target.Y+0),
             
-            [CardinalPoint.North]     = (target.x+0, target.y+1),
-            [CardinalPoint.South]     = (target.x+0, target.y-1)
+            [CardinalDir.North]     = (target.X+0, target.Y+1),
+            [CardinalDir.South]     = (target.X+0, target.Y-1)
         };
     }
 }
