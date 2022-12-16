@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Advent22.Utils.Cardinals;
 
 public struct Coordinate
@@ -24,7 +26,13 @@ public struct Coordinate
 
     public static implicit operator (int X, int Y)(Coordinate coordinate)
         => (coordinate.X, coordinate.Y);
-
+    
+    public static implicit operator Vector2(Coordinate coordinate)
+        => new Vector2(coordinate.X, coordinate.Y);
+    
+    public static explicit operator Coordinate(Vector2 vector)
+        => new ((int)vector.X, (int)vector.Y);
+    
     #endregion
 
     #region Unary Operators

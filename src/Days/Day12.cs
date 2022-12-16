@@ -9,6 +9,7 @@ public static class Day12
     {
         var rawInput = File.ReadAllLines("./inputs/D02.txt");
         var gridV2 = new Dictionary<Coordinate, Pixel>();
+        var parser = GetCharCardinalSetter();
         
         var startPoint = new Coordinate();
         var endPoint = new Coordinate();
