@@ -2,7 +2,11 @@ namespace Advent22.Utils.Cardinals;
 
 public static class CardinalHelper
 {
-    public static Dictionary<XCardinalDir, Coordinate> GetAdjacentCoords(this Coordinate target)
+    /// <returns>
+    /// All adjacent coordinates, including diagonals
+    /// and the center.
+    /// </returns>
+    public static Dictionary<XCardinalDir, Coordinate> AsAdjacentArea(this Coordinate target)
     {
         return new Dictionary<XCardinalDir, Coordinate>()
         {
@@ -22,7 +26,10 @@ public static class CardinalHelper
         };
     }
     
-    public static Dictionary<CardinalDir, Coordinate> GetCrossAdjacentCoords(this Coordinate target)
+    /// <returns>
+    /// Adjacent coordinates: north, south, east and west.
+    /// </returns>
+    public static Dictionary<CardinalDir, Coordinate> GetAdjacentCoordinates(this Coordinate target)
     {
         return new Dictionary<CardinalDir, Coordinate>
         {

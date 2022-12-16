@@ -125,7 +125,7 @@ public static class Day9
     private static bool IsNearBy(this Coordinate particleA, Coordinate particleB)
     {
         var adjacentCoords = particleA
-            .GetAdjacentCoords()
+            .AsAdjacentArea()
             .Values;
         
         var result = adjacentCoords.Any(c => c == particleB);
@@ -136,8 +136,8 @@ public static class Day9
     private static Coordinate GetNextToTarget(this Coordinate currentKnot, Coordinate nextKnot)
     {
         // *
-        var validJumpingNodes = nextKnot.GetCrossAdjacentCoords();
-        var possibilities = currentKnot.GetAdjacentCoords();
+        var validJumpingNodes = nextKnot.GetAdjacentCoordinates();
+        var possibilities = currentKnot.AsAdjacentArea();
 
         return possibilities
             .Values
