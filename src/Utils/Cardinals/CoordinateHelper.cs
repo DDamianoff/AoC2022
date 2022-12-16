@@ -1,5 +1,6 @@
 namespace Advent22.Utils.Cardinals;
 
+[Obsolete]
 public static class CardinalHelper
 {
     /// <returns>
