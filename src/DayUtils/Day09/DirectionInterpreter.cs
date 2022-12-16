@@ -2,7 +2,7 @@ using Advent22.DayUtils.Day09;
 using Advent22.Utils;
 using Advent22.Utils.Cardinals;
 
-namespace Advent22.DaYUtils.DaY09;
+namespace Advent22.DayUtils.DaY09;
 
 // R 2 => (X:2,Y:0)
 public static class DirectionInterpreter
@@ -38,41 +38,13 @@ public static class DirectionInterpreter
     public static IEnumerable<Movement> GetMultipleFromStringCommand(string[] commands) 
         => commands.Select(GetSingleFromStringCommand);
     
+    [Obsolete("use defined operators instead")]
     public static Coordinate Apply (this Coordinate a, Coordinate b)
         => ( a.X + b.X , a.Y + b.Y);
     
+    [Obsolete("use defined operators instead")]
     public static Coordinate Negate (this Coordinate coordinate)
         => (-coordinate.X, -coordinate.Y);
 
-    public static Dictionary<XCardinalDir, Coordinate> GetAdjacentCoords(this Coordinate target)
-    {
-        return new Dictionary<XCardinalDir, Coordinate>()
-        {
-            [XCardinalDir.East]      = (target.X+1, target.Y+0),
-            [XCardinalDir.West]      = (target.X-1, target.Y+0),
-            
-            [XCardinalDir.North]     = (target.X+0, target.Y+1),
-            [XCardinalDir.South]     = (target.X+0, target.Y-1),
-            
-            [XCardinalDir.Northeast] = (target.X+1, target.Y+1),
-            [XCardinalDir.Northwest] = (target.X-1, target.Y+1),
-            
-            [XCardinalDir.Southeast] = (target.X+1, target.Y-1),
-            [XCardinalDir.Southwest] = (target.X-1, target.Y-1),
-            
-            [XCardinalDir.Center] = (target.X, target.Y)
-        };
-    }
-    
-    public static Dictionary<CardinalDir, Coordinate> GetCrossAdjacentCoords(this Coordinate target)
-    {
-        return new Dictionary<CardinalDir, Coordinate>
-        {
-            [CardinalDir.East]      = (target.X+1, target.Y+0),
-            [CardinalDir.West]      = (target.X-1, target.Y+0),
-            
-            [CardinalDir.North]     = (target.X+0, target.Y+1),
-            [CardinalDir.South]     = (target.X+0, target.Y-1)
-        };
-    }
+    // moved to CardinalHelper
 }

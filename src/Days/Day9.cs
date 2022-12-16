@@ -1,4 +1,6 @@
-using Advent22.DayUtils.Day09;
+using Advent22.DayUtils.DaY09;
+using Advent22.Utils;
+using Advent22.Utils.Cardinals;
 
 namespace Advent22;
 
@@ -9,10 +11,10 @@ public static class Day9
         var input = File.ReadAllLines("./inputs/D09.txt");
         var sequenceList = DirectionInterpreter.GetMultipleFromStringCommand(input);
         
-        var tailUsedPositions = new HashSet<(int x, int y)>();
+        var tailUsedPositions = new HashSet<Coordinate>();
         
-        var head = (0, 0);
-        var tail = (0, 0);
+        var head = new Coordinate(0, 0);
+        var tail = new Coordinate(0, 0);
 
         tailUsedPositions.Add(tail); // add initial position
         
@@ -44,11 +46,11 @@ public static class Day9
         var input = File.ReadAllLines("./inputs/D0X.txt");
         var sequenceList = DirectionInterpreter.GetMultipleFromStringCommand(input);
         
-        var tailUsedPositions = new HashSet<(int x, int y)>();
+        var tailUsedPositions = new HashSet<Coordinate>();
 
-        (int x, int y)[] rope = Enumerable
+        var rope = Enumerable
             .Range(0, 10)
-            .Select(_ => (0,0))
+            .Select(_ => new Coordinate(0,0))
             .ToArray(); // yes, I'm too lazy to properly fill an array 
         
         ref var head = ref rope[0];
@@ -93,7 +95,7 @@ public static class Day9
                                           $"state of list: " 
                                           + Environment.NewLine +
                                           $"{rope
-                                              .Select(a =>$"p = ({a.x});({a.y})")
+                                              .Select(a =>$"p = ({a.X});({a.Y})")
                                               .ToList()
                                               .Aggregate( (crt, nxt) => 
                                               string.Concat(crt, nxt, Environment.NewLine))}");
@@ -113,14 +115,14 @@ public static class Day9
             .Display("same but for the rope-snake");
     }
     
-    private static (int x, int y) MoveTo(ref this (int x, int y) target, (int x, int y) newCoordinates)
+    private static Coordinate MoveTo(ref this Coordinate target, Coordinate newCoordinates)
     {
         var trace = target;
         target = newCoordinates;
         return trace;
     }
 
-    private static bool IsNearBy(this (int x, int y) particleA, (int x, int y) particleB)
+    private static bool IsNearBy(this Coordinate particleA, Coordinate particleB)
     {
         var adjacentCoords = particleA
             .GetAdjacentCoords()
@@ -131,7 +133,7 @@ public static class Day9
     }
 
 
-    private static (int x, int y) GetNextToTarget(this (int x, int y) currentKnot, (int x, int y) nextKnot)
+    private static Coordinate GetNextToTarget(this Coordinate currentKnot, Coordinate nextKnot)
     {
         // *
         var validJumpingNodes = nextKnot.GetCrossAdjacentCoords();

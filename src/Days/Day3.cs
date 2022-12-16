@@ -1,3 +1,5 @@
+using Advent22.Utils;
+
 namespace Advent22;
 
 public static class Day3

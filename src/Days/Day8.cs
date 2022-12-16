@@ -1,4 +1,5 @@
 using Advent22.DayUtils.Day08;
+using Advent22.Utils;
 
 namespace Advent22;
 

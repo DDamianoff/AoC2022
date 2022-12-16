@@ -3,6 +3,7 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 using Advent22.DayUtils.Day11;
+using Advent22.Utils;
 
 namespace Advent22;
 

@@ -1,4 +1,4 @@
-namespace Advent22;
+namespace Advent22.Utils;
 
 internal static class Utils
 {

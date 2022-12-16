@@ -1,5 +1,6 @@
 #nullable enable
 using Advent22.DayUtils.Day07;
+using Advent22.Utils;
 
 namespace Advent22;
 
