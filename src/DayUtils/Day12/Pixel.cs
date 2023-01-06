@@ -1,21 +1,24 @@
+using Advent22.Utils.Cardinals;
+
 namespace Advent22.DayUtils.Day12;
 
 public struct Pixel
 {
     public int Deep;
-    //
-    public bool HotSpot;
-    public bool Indexed;
+    public Coordinate Location;
+    public char Character;
 
-    public Pixel(int deep)
+    public Pixel(int deep, Coordinate location, char character)
     {
         Deep = deep;
-        HotSpot = false;
+        Location = location;
+        Character = character;
     }
     
-    public Pixel()
+    public Pixel() => Deep = 0;
+
+    public override string ToString()
     {
-        Deep = 0;
-        HotSpot = false;
+        return $"{Character}" + $" {Deep}".PadLeft(2, '0');
     }
 }

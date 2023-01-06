@@ -25,7 +25,7 @@ public struct Direction
     #region Builders
     
     // the cursed one
-    private static Direction Center(int times = 1)
+    public static Direction Center(int times = 1)
         => new(XCardinalDir.Center, times);
     
     public static Direction Up(int times = 1)
@@ -94,17 +94,18 @@ public struct Direction
     
     public static Direction operator !(Direction direction)
     {
+        var count = direction.Times;
         return direction._direction switch
         {
-            XCardinalDir.East       =>  West(),
-            XCardinalDir.West       =>  East(),
-            XCardinalDir.North      =>  South(),
-            XCardinalDir.South      =>  North(),
-            XCardinalDir.Northeast  =>  Southwest(),
-            XCardinalDir.Northwest  =>  Southeast(),
-            XCardinalDir.Southeast  =>  Northwest(),
-            XCardinalDir.Southwest  =>  Northeast(),
-            XCardinalDir.Center     =>  Center(),
+            XCardinalDir.East       =>  West(count),
+            XCardinalDir.West       =>  East(count),
+            XCardinalDir.North      =>  South(count),
+            XCardinalDir.South      =>  North(count),
+            XCardinalDir.Northeast  =>  Southwest(count),
+            XCardinalDir.Northwest  =>  Southeast(count),
+            XCardinalDir.Southeast  =>  Northwest(count),
+            XCardinalDir.Southwest  =>  Northeast(count),
+            XCardinalDir.Center     =>  Center(count),
             _                       =>  throw new InvalidOperationException()
         };
     }

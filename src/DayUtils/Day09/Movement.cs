@@ -1,5 +1,6 @@
 using Advent22.Utils;
 using Advent22.Utils.Cardinals;
+#pragma warning disable CS0618
 
 namespace Advent22.DayUtils.Day09;
 

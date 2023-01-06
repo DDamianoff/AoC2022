@@ -141,4 +141,45 @@ public struct Coordinate
         throw new NotImplementedException();
     }
 
+    public Direction EstimatedDirectionTo(Coordinate another)
+    {
+        var dirAsRelativeCoor = this - another;
+        var xMovement = dirAsRelativeCoor.X != 0;
+        var yMovement = dirAsRelativeCoor.Y != 0;
+
+        switch (xMovement)
+        {
+            // x
+            case true when !yMovement:
+            {
+                var count = Math.Abs(dirAsRelativeCoor.X) > 1
+                    ? Math.Abs(dirAsRelativeCoor.Y) - 1
+                    : 1;
+            
+                return dirAsRelativeCoor.X > 0
+                    ? Direction.Right(count)
+                    : Direction.Left(count);
+            }
+            
+            // y
+            case false when yMovement:
+            {
+                var count = Math.Abs(dirAsRelativeCoor.Y) > 1
+                    ? Math.Abs(dirAsRelativeCoor.Y) - 1
+                    : 1;
+            
+                return dirAsRelativeCoor.Y > 0
+                    ? Direction.Up(count)
+                    : Direction.Down(count);
+            }
+            
+            // x,y
+            case true when true:
+                throw new NotImplementedException("diagonal directions not supported");
+            
+            // none
+            case false when true:
+                return Direction.Center();
+        }
+    }
 }
