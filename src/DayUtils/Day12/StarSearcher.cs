@@ -34,8 +34,7 @@ public class StarSearcher
     public bool PerformSearch()
     {
         var openList = new PriorityQueue<PixelStarNode, double>();
-        var closedList = new HashSet<PixelStarNode>();
-        
+
         openList.Enqueue(Current, Current.TotalCost);
         
         while (openList.Count != 0)
@@ -44,8 +43,6 @@ public class StarSearcher
             
             if (Current.PreviouslyExpanded)
                 continue;
-
-            closedList.Add(Current);
 
             var adjacent = GetAdjacent(Current);
             
@@ -72,7 +69,7 @@ public class StarSearcher
         }
         
         
-        _previouslyPerformedSuccessfulSearch = closedList.Any(e => e == _goal);
+        _previouslyPerformedSuccessfulSearch = _goal.Parent is not null;
 
         return _previouslyPerformedSuccessfulSearch;
     }
