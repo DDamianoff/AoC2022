@@ -33,56 +33,57 @@ function Invoke-MainFunction {
     }
 
     # Part one:
-    & {
-        New-Variable -Name Counter -Value 0;
 
-        1..($distressSignalsPair.Count) | ForEach-Object -Process {
-    
-            $item = $distressSignalsPair[$_ - 1];
-    
-            $faulty = Find-FaultyPacket -SignalPair $item
-    
-            if (-Not $faulty) {
-                $Counter += $_;
-            }
+    New-Variable -Name Counter -Value 0;
+
+    1..($distressSignalsPair.Count) | ForEach-Object -Process {
+
+        $item = $distressSignalsPair[$_ - 1];
+
+        $faulty = Find-FaultyPacket -SignalPair $item
+
+        if (-Not $faulty) {
+            $Counter += $_;
         }
-    
-        Write-Host "part one: $Counter"
     }
+
+    return $Counter
+    
+    # /part one
     
     # Part two:
     & {
-        function Get-trueValue {
-            param ($corr)
-
-            if ($corr -is [array]) {
-                if ($corr.Length -eq 0) {
-                    return $corr;
-                }
-
-                return Get-trueValue $corr[0];
-            }
-            return $corr;
-        }
-
-        New-Variable -Name signalPool -Value (New-Object -TypeName 'System.Collections.ArrayList');
-        New-Variable -Name keyPair -Value (@{
-            left = ('[[2]]'     | ConvertFrom-Json -NoEnumerate);
-            right = ('[[6]]'    | ConvertFrom-Json -NoEnumerate);
-        })
-
-        $distressSignalsPair.Add($keyPair) | Out-Null;
-
-        $distressSignalsPair | ForEach-Object -Process {
-            $signalPool.Add($_.left) | Out-Null;
-            $signalPool.Add($_.right) | Out-Null;
-        }
-
-        $sorted = $signalPool | Sort-Object {Get-trueValue $_}
-        
-        $sorted | ForEach-Object -Process {
-            Write-Host ($_ | ConvertTo-Json -Depth 100 -Compress)
-        }
+#        function Get-trueValue {
+#            param ($corr)
+#
+#            if ($corr -is [array]) {
+#                if ($corr.Length -eq 0) {
+#                    return $corr;
+#                }
+#
+#                return Get-trueValue $corr[0];
+#            }
+#            return $corr;
+#        }
+#
+#        New-Variable -Name signalPool -Value (New-Object -TypeName 'System.Collections.ArrayList');
+#        New-Variable -Name keyPair -Value (@{
+#            left = ('[[2]]'     | ConvertFrom-Json -NoEnumerate);
+#            right = ('[[6]]'    | ConvertFrom-Json -NoEnumerate);
+#        })
+#
+#        $distressSignalsPair.Add($keyPair) | Out-Null;
+#
+#        $distressSignalsPair | ForEach-Object -Process {
+#            $signalPool.Add($_.left) | Out-Null;
+#            $signalPool.Add($_.right) | Out-Null;
+#        }
+#
+#        $sorted = $signalPool | Sort-Object {Get-trueValue $_}
+#        
+#        $sorted | ForEach-Object -Process {
+#            Write-Host ($_ | ConvertTo-Json -Depth 100 -Compress)
+#        }
 
     }
 }
