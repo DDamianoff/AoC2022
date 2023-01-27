@@ -10,7 +10,7 @@ function Invoke-MainFunction {
     Set-StrictMode  -Version Latest
 
     New-Variable    -Name rawInput `
-                    -Value (Get-Content -Path './inputs/D0X.txt' -Raw)
+                    -Value (Get-Content -Path './inputs/D13.txt' -Raw)
 
     New-Variable    -Name parsedInput `
                     -Value ($rawInput -Split '(?:\r?\n){2,}')
