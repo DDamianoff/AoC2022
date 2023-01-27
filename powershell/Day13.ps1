@@ -1,6 +1,13 @@
 #!/bin/pwsh
 
+enum EvaluationResult {
+    faulty
+    neutral
+    healty
+}
+
 function Invoke-MainFunction {
+    Set-StrictMode  -Version Latest
 
     New-Variable    -Name rawInput `
                     -Value (Get-Content -Path './inputs/D0X.txt' -Raw)
@@ -11,27 +18,73 @@ function Invoke-MainFunction {
     New-Variable    -Name distressSignalsPair `
                     -Value (New-Object -TypeName 'System.Collections.ArrayList');
 
-    foreach ($item in $parsedInput) {
-        $current = $item
-        $signal = ($current -Split "\n") -replace "\[\]",'[[[-1]]]';
+    $parsedInput | ForEach-Object -Process {
+        $signal = ("$_" -Split "\n");
         
-        $left = $signal[0] | ConvertFrom-Json -Depth 100;
-        $right = $signal[1] | ConvertFrom-Json -Depth 100;
+        $left = ($signal[0] | ConvertFrom-Json -Depth 1000 -NoEnumerate);
+        $right = ($signal[1] | ConvertFrom-Json -Depth 1000 -NoEnumerate);
+        
         $pair = @{
-            left = [Object[]]$($left)
-            right = [Object[]]$($right)
+            left = $left
+            right = $right
         };
-        $distressSignalsPair.Add($pair);
-    }
-    
-    foreach ($item in $distressSignalsPair) {
-        Write-Host ($item.left) vs ($item.right)
-        $result = Find-FaultyPacket -SignalPair $item
-        Write-Host ($result ? "faulty" : "not faulty")
-        Write-Host "-------------"
+
+        $distressSignalsPair.Add($pair) | Out-Null;
     }
 
+    # Part one:
+    & {
+        New-Variable -Name Counter -Value 0;
+
+        1..($distressSignalsPair.Count) | ForEach-Object -Process {
     
+            $item = $distressSignalsPair[$_ - 1];
+    
+            $faulty = Find-FaultyPacket -SignalPair $item
+    
+            if (-Not $faulty) {
+                $Counter += $_;
+            }
+        }
+    
+        Write-Host "part one: $Counter"
+    }
+    
+    # Part two:
+    & {
+        function Get-trueValue {
+            param ($corr)
+
+            if ($corr -is [array]) {
+                if ($corr.Length -eq 0) {
+                    return $corr;
+                }
+
+                return Get-trueValue $corr[0];
+            }
+            return $corr;
+        }
+
+        New-Variable -Name signalPool -Value (New-Object -TypeName 'System.Collections.ArrayList');
+        New-Variable -Name keyPair -Value (@{
+            left = ('[[2]]'     | ConvertFrom-Json -NoEnumerate);
+            right = ('[[6]]'    | ConvertFrom-Json -NoEnumerate);
+        })
+
+        $distressSignalsPair.Add($keyPair) | Out-Null;
+
+        $distressSignalsPair | ForEach-Object -Process {
+            $signalPool.Add($_.left) | Out-Null;
+            $signalPool.Add($_.right) | Out-Null;
+        }
+
+        $sorted = $signalPool | Sort-Object {Get-trueValue $_}
+        
+        $sorted | ForEach-Object -Process {
+            Write-Host ($_ | ConvertTo-Json -Depth 100 -Compress)
+        }
+
+    }
 }
 
 
@@ -40,90 +93,113 @@ function Find-FaultyPacket {
         [Hashtable]$signalPair
     )
 
+    New-Variable    -Name leftPart `
+                    -Value $signalPair.left `
+                    -Description "left segment containing integers and lists" `
+                    -Option ReadOnly;
+    
+    New-Variable    -Name rightPart `
+                    -Value $signalPair.right `
+                    -Description "right segment containing integers and lists" `
+                    -Option ReadOnly;
+    
+    New-Variable    -Name times `
+                    -Value ($leftPart.Count -gt $rightPart.Count `
+                                    ? $rightPart.Count `
+                                    : $leftPart.Count) `
+                    -Description "How many times the comparison should be done. 
+                                  Determined by the side with less elements" `
+                    -Option ReadOnly;
 
-    function Test-SingleIntegerPair {
-        param ($left, $right)
-        if (($left -eq -1 -and $right -ne -1)) {
-            return $false;
-        }
+    [EvaluationResult]$result = Test-UndefinedPair -leftSide $leftPart -rightSide $rightPart;
 
-        return $left -gt $right;
+    if ($result -eq [EvaluationResult]::faulty) {
+        return $true;
     }
 
-    function Test-ListPair {
-        param ($leftList, $rightList)
+    return $false;
+}
 
-        $times = $leftList.Length -gt $rightList.Length ? $rightList.Length : $leftList.Length;
+function Test-SingleIntegerPair {
+    param ([int]$left, [int]$right)
 
-        for ($i = 0; $i -lt $times; $i++) {
-            $parsedLeft = $leftList -is [array] ? $leftList : [array]$leftList;
-            $parsedRight = $rightList -is [array] ? $rightList : [array]$rightList;
+    $evaluation = [Math]::Sign($right - $left)
 
-            if ($left -is [array] -or $right -is [array]) {
-                [bool]$faulty = (Test-ListPair -leftList ($parsedLeft) -rightList ($parsedRight));
-                
-                if ($faulty) {
-                    return $faulty;
-                }
-            }
-
-            $faulty = (Test-SingleIntegerPair -left $left -right $right)
-
-            if ($faulty) {
-                return $true;
-            }
-
+    switch ($evaluation) {
+        -1 {
+            return [EvaluationResult]::faulty
         }
-
-        return $false;
+         1 {
+            return [EvaluationResult]::healty
+        }
+         0 {
+            return [EvaluationResult]::neutral
+        }
     }
+}
 
-    $times = $signalPair.left.Length -gt $signalPair.right.Length ? $signalPair.right.Length : $signalPair.left.Length;
+function Test-ListPair {
+    param ($leftList, $rightList)
 
-    for ($current = 0; $current -lt $times; $current++) {
+    New-Variable    -Name times `
+                    -Value ($($leftList.Length, $rightList.Length) | Sort-Object -Descending | Select-Object -Last 1)
 
-        $left = ($signalPair.left)[$current];
-        $right = ($signalPair.right)[$current];
-        [bool]$faulty = $false;
+    for ($i = 0; $i -lt $times; $i++) {
+        $leftElement = $leftList[$i];
+        $rightElement = $rightList[$i];
 
-        <#
-         # IF left -eq right but with any kind of object
-         # Compare-Object returns an array of differences, or null
-         # if no one.
-         # Type inference makes most of the job: 
-         # - null: false
-         # - differences[]: true
-         # - $(2) vs 2:
-         #   - $(2) vs $(2)
-         #   - no differences
-         #
-         # Most precise description should be:
-         # "if there is not differences between these two objects..."
-         #>
-        # if (-Not (Compare-Object $left $right)) {
-        #     continue;
-        # }
-        
-        if ($left -is [array] -or $right -is [array]) {
-            $parsedLeft = $left -is [array] ? $left : [array]$left;
-            $parsedRight = $right -is [array] ? $right : [array]$right;
-            $faulty = (Test-ListPair -leftList ($parsedLeft) -rightList ($parsedRight))
+        [EvaluationResult]$result = Test-UndefinedPair -leftSide $leftElement -rightSide $rightElement
 
-            if ($faulty){
-                return $true;
-            }
-
+        if ($result -eq [EvaluationResult]::neutral) {
             continue;
         }
 
-        $faulty = (Test-SingleIntegerPair -left $left -right $right);
-        if ($faulty) {
-            return $true;
-        }
-    
+        return $result
     }
-    return $signalPair.left.Length -gt $signalPair.right.Length;
+
+    # Right ran out first?
+    if ($leftList.Length -gt $rightList.Length) {
+        return [EvaluationResult]::faulty;
+    }
+
+    # Left ran out first?
+    if ($leftList.Length -lt $rightList.Length) {
+        return [EvaluationResult]::healty;
+    }
+
+    return [EvaluationResult]::neutral;
 }
 
+function Test-MixedPair {
+    param ($leftElement, $rightElement)
 
-Invoke-MainFunction
+    return (Test-ListPair -leftList ([array]$leftSide) -rightList ([array]$rightSide));
+}
+
+function Test-UndefinedPair {
+    param ($leftSide, $rightSide)
+
+    $leftIsList = $leftSide -is [array];
+    $rightIsList = $rightSide -is [array];
+
+    New-Variable -Name result;
+
+    # if both lists:
+    if ($leftIsList -and $rightIsList) {
+        Set-Variable -name result -Value (Test-ListPair -leftList $leftSide -rightList $rightSide)
+    }
+
+    # if both int:
+    elseif (-not $leftIsList -and -not $rightIsList) {
+        Set-Variable -name result -Value (Test-SingleIntegerPair -left $leftSide -right $rightSide)
+    }
+
+    # mixed:
+    elseif ($leftIsList -xor $rightIsList) {
+        Set-Variable -name result -Value (Test-MixedPair -leftElement $leftSide -rightElement $rightSide)
+    }
+
+    return $result;
+}
+
+Invoke-MainFunction -Verbose
